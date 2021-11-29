@@ -6,24 +6,32 @@
       <p class="widthCol">Category</p>
       <p class="widthCol">Value</p>
     </div>
-    <div class="column" v-for="(item, index) in items" :key="index">
+    <div class="column" v-for="(item, index) in getPaymentsList" :key="index">
       <p class="widthCol">{{ item.id }}</p>
       <p class="widthCol">{{ item.date }}</p>
       <p class="widthCol">{{ item.category }}</p>
-      <p class="widthCol">{{ item.price }}</p>
+      <p class="widthCol">{{ item.value }}</p>
     </div>
   </div>
 </template>
  
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-  props: {
-    items: {
-      type: Array,
-      default: () => [],
-    },
+  data() {
+    return {
+      //   page: 1, // текущая страница
+      //   n: 3,
+    };
   },
   methods: {},
+  computed: {
+    ...mapGetters(["getPaymentsList"]),
+  },
+  mounted() {
+    console.log(this.getPaymentsList);
+  },
 };
 </script>
  

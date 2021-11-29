@@ -3,7 +3,7 @@
     <div @click="onClick(cur - 1)">-</div>
     <span
       @click="onClick(page)"
-      v-for="page in amountPages"
+      v-for="page in arrLength"
       :key="page"
       :class="{ active: page === cur }"
     >
@@ -13,27 +13,27 @@
   </div>
 </template>
 
+
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Pagination",
   data() {
     return {
-      pagesCount: 0,
+      arrLength: 4,
     };
   },
   props: {
-    itemsLength: Number, // общее кол-во эл-ов
     n: Number, //кол-во выводимых на 1 стр элементов
     cur: Number,
   },
   computed: {
-    amountPages() {
-      return Math.ceil(this.itemsLength / this.n);
-    },
+    ...mapGetters(["getArrLength"]),
   },
   methods: {
     onClick(p) {
-      if (p < 0 || p > this.amountPages) {
+      if (p < 0 || p > this.arrLength) {
         return;
       }
       this.$emit("paginate", p);
@@ -43,13 +43,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+span {
+  padding: 0 7px 0 7px;
+}
 .table {
   display: flex;
+  align-items: center;
   & > div {
     padding: 10px;
-    &.active {
-      background: rgb(190, 225, 221);
-    }
   }
+}
+.active {
+  background: rgb(161, 184, 181);
 }
 </style>

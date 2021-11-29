@@ -5,106 +5,49 @@
     </header>
     <main>
       <button @click="showAddForm">ADD NEW COST +</button>
-      <PaymentsForm @addNewPayment="addNewPayment" :showForm="showForm" />
-      <PaymentsList :items="paymentsList" />
-      <!-- <Pagination
-        @paginate="onChangePage"
-        :cur="page"
-        :n="n"
-        :itemsLength="paymentsList.length"
-      /> -->
+      <PaymentsForm :showForm="showForm" />
+      <PaymentsList />
+      <Pagination @paginate="onChangePage" :cur="page" :length="12" />
     </main>
   </div>
 </template>
  
 <script>
+// :itemsLength="paymentsList.length"
 import PaymentsList from "./components/PaymentsList";
 import PaymentsForm from "./components/PaymentsForm";
-// import Pagination from "./components/Pagination";
+import Pagination from "./components/Pagination";
+
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
   components: {
     PaymentsList,
     PaymentsForm,
-    // Pagination,
+    Pagination,
   },
   data() {
     return {
-      paymentsList: [],
-      // page: 1, // текущая страница
-      // n: 2,
+      page: 1, // текущая страница
+      n: 3,
       showForm: false,
     };
   },
-  // computed: {
-  //   currentElements() {
-  //     const { page, n } = this;
-  //     return this.paymentsList.slise(
-  //       this.n * (this.page - 1),
-  //       this.n * this.page + this.n
-  //     );
-  //   },
-  // },
+
   methods: {
-    fetchData() {
-      return [
-        {
-          id: 1,
-          date: "28.03.2020",
-          category: "Food",
-          price: 1123,
-        },
-        {
-          id: 2,
-          date: "24.03.2020",
-          category: "Transport",
-          price: 360,
-        },
-        {
-          id: 3,
-          date: "24.03.2020",
-          category: "Education",
-          price: 2500,
-        },
-        {
-          id: 4,
-          date: "28.03.2020",
-          category: "Food",
-          price: 1123,
-        },
-        {
-          id: 5,
-          date: "24.03.2020",
-          category: "Transport",
-          price: 360,
-        },
-        {
-          id: 6,
-          date: "24.03.2020",
-          category: "Education",
-          price: 2500,
-        },
-        {
-          id: 7,
-          date: "24.03.2020",
-          category: "Education",
-          price: 2500,
-        },
-      ];
-    },
-    addNewPayment(data) {
-      this.paymentsList = [...this.paymentsList, data];
-    },
+    ...mapActions(["fetchData"]),
+
     showAddForm() {
       this.showForm = !this.showForm;
     },
     onChangePage(p) {
       this.page = p;
+      this.fetchData(this.page);
     },
   },
-  created() {
-    this.paymentsList = this.fetchData();
+  mounted() {
+    this.fetchData(this.page);
   },
 };
 </script>
@@ -115,7 +58,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
