@@ -1,5 +1,27 @@
 <template>
   <div>
+    <div>
+      <p @click="routerLinkOnClick">
+        <!-- Первая ссылка визуализирует поведение при отсутствии вводного параметра value -->
+        <router-link class="link" to="/dashboard/add/payment/Food"
+          >Добавить платеж в категорию Food стоимостью 200</router-link
+        >
+      </p>
+      <p @click="routerLinkOnClick">
+        <router-link class="link" to="/dashboard/add/payment/Transport?value=50"
+          >Добавить платеж в категорию Transport стоимостью 50</router-link
+        >
+      </p>
+      <p @click="routerLinkOnClick">
+        <router-link
+          class="link"
+          to="/dashboard/add/payment/Entertainment?value=2000"
+          >Добавить платеж в категорию Entertainment стоимостью
+          2000</router-link
+        >
+      </p>
+    </div>
+    <button @click="showAddForm">ADD NEW COST +</button>
     <div v-show="showForm">
       <input type="text" placeholder="Date" v-model="date" />
       <select v-model="selected">
@@ -22,11 +44,10 @@ export default {
       date: "",
       value: 0,
       selected: "",
+      showForm: false,
     };
   },
-  props: {
-    showForm: Boolean,
-  },
+
   computed: {
     ...mapGetters(["getCategoryList"]),
     // функция автоматического создания даты
@@ -41,6 +62,26 @@ export default {
   methods: {
     ...mapActions(["loadCategories"]),
     ...mapMutations(["setPaymentsListData", "addPaymentsListData"]),
+
+    showAddForm() {
+      this.showForm = !this.showForm;
+    },
+
+    routerLinkOnClick() {
+      // при отсутствии value в пути router-link
+      if (!this.$route.query.value) {
+        this.date = this.getCurrentDate;
+        this.showForm = true;
+        this.value = 0;
+      } else {
+        const data = {
+          date: this.getCurrentDate,
+          value: +this.$route.query.value,
+          category: this.$route.path.split("/").pop(),
+        };
+        this.addPaymentsListData(data);
+      }
+    },
 
     onClick() {
       if (this.date === "") {
@@ -66,5 +107,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.link {
+  margin: 20px 0;
+}
 </style>

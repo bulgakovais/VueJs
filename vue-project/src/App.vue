@@ -2,53 +2,27 @@
   <div id="app">
     <header>
       <div>My personal costs</div>
+      <router-link to="/home">Home</router-link>
+      <router-link to="/about">About</router-link>
+      <router-link to="/dashboard">Dashboard</router-link>
     </header>
     <main>
-      <button @click="showAddForm">ADD NEW COST +</button>
-      <PaymentsForm :showForm="showForm" />
-      <PaymentsList />
-      <Pagination @paginate="onChangePage" :cur="page" :length="12" />
+      <router-view />
     </main>
   </div>
 </template>
  
 <script>
-// :itemsLength="paymentsList.length"
-import PaymentsList from "./components/PaymentsList";
-import PaymentsForm from "./components/PaymentsForm";
-import Pagination from "./components/Pagination";
-
-import { mapActions } from "vuex";
-
 export default {
   name: "App",
-  components: {
-    PaymentsList,
-    PaymentsForm,
-    Pagination,
-  },
+  components: {},
   data() {
     return {
-      page: 1, // текущая страница
-      n: 3,
-      showForm: false,
+      page: "dashboard",
     };
   },
 
-  methods: {
-    ...mapActions(["fetchData"]),
-
-    showAddForm() {
-      this.showForm = !this.showForm;
-    },
-    onChangePage(p) {
-      this.page = p;
-      this.fetchData(this.page);
-    },
-  },
-  mounted() {
-    this.fetchData(this.page);
-  },
+  methods: {},
 };
 </script>
  
@@ -60,5 +34,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
+}
+a {
+  margin: 0 20px 0 0;
 }
 </style>

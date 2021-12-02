@@ -30,7 +30,7 @@ export default {
     ...mapGetters(["getPaymentsList"]),
   },
   mounted() {
-    console.log(this.getPaymentsList);
+    // console.log(this.getPaymentsList);
   },
 };
 </script>
