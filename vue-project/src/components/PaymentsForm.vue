@@ -44,6 +44,7 @@ export default {
       date: "",
       value: 0,
       selected: "",
+      id: 0,
       showForm: false,
     };
   },
@@ -61,7 +62,11 @@ export default {
   },
   methods: {
     ...mapActions(["loadCategories"]),
-    ...mapMutations(["setPaymentsListData", "addPaymentsListData"]),
+    ...mapMutations([
+      "setPaymentsListData",
+      "addPaymentsListData",
+      "deletePaymentsListData",
+    ]),
 
     showAddForm() {
       this.showForm = !this.showForm;
@@ -97,12 +102,24 @@ export default {
       this.date = "";
       this.selected = "";
       this.value = 0;
+      this.showForm = false;
+    },
+
+    showFormOnClickEdit(item) {
+      console.log(item);
+      this.showForm = true;
+      this.id = item.id;
+      this.date = item.date;
+      this.value = item.value;
+      this.selected = item.category;
+      this.deletePaymentsListData(item);
     },
   },
   mounted() {
     if (!this.getCategoryList.length) {
       this.loadCategories();
     }
+    this.$context.EventBus.$on("showFormOnClickEdit", this.showFormOnClickEdit);
   },
 };
 </script>

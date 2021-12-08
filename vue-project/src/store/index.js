@@ -46,6 +46,12 @@ export default new Vuex.Store({
     addPaymentsListData(state, data) {
       state.paymentList.push(data)
     },
+    deletePaymentsListData(state, payload) {
+      const deleteItem = state.paymentList.indexOf(payload)
+      if (deleteItem > -1) {
+        state.paymentList.splice(deleteItem, 1)
+      }
+    },
     setCategories(state, payload) {
       if (!Array.isArray(payload)) {
         payload = [payload]
