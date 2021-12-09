@@ -10,7 +10,9 @@ export default {
             EventBus: new Vue(),
 
             show(event, items) {
+
                 const caller = event.target
+
                 if (caller != this.caller) {
                     this.caller = caller
                     console.log(caller);
@@ -22,7 +24,10 @@ export default {
             },
 
             close() {
+
                 this.EventBus.$emit('close')
+                this.caller = null
+
             },
             showForm(item) {
                 this.EventBus.$emit('showFormOnClickEdit', item)

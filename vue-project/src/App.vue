@@ -9,15 +9,15 @@
     <main>
       <router-view />
     </main>
-    <transition name="fade"><context-menu /> </transition>
+    <!-- <transition name="fade"><context-menu /> </transition> -->
   </div>
 </template>
  
 <script>
-import ContextMenu from "./components/ContextMenu.vue";
+// import ContextMenu from "./components/ContextMenu.vue";
 export default {
   name: "App",
-  components: { ContextMenu },
+  // components: { ContextMenu },
   data() {
     return {
       page: "dashboard",
@@ -41,3 +41,4 @@ a {
   margin: 0 20px 0 0;
 }
 </style>
+

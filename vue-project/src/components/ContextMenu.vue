@@ -72,3 +72,5 @@ export default {
   color: rgb(230, 65, 65);
 }
 </style>
+
+

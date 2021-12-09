@@ -3,6 +3,7 @@
     <PaymentsForm />
     <PaymentsList />
     <Pagination @paginate="onChangePage" :cur="page" :length="12" />
+    <transition name="fade"><context-menu /></transition>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import PaymentsForm from "../components/PaymentsForm";
 import Pagination from "../components/Pagination";
 
 import { mapActions } from "vuex";
+// import ContextMenu from "../components/ContextMenu.vue";
 
 export default {
   name: "Dashboard",
@@ -19,6 +21,7 @@ export default {
     PaymentsList,
     PaymentsForm,
     Pagination,
+    ContextMenu: () => import("../components/ContextMenu.vue"),
   },
   data() {
     return {
@@ -40,5 +43,17 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+  position: absolute;
+  cursor: pointer;
+  background-color: #eee;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
