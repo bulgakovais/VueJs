@@ -1,44 +1,35 @@
 <template>
-  <div id="app">
-    <header>
-      <div>My personal costs</div>
-      <router-link to="/home">Home</router-link>
-      <router-link to="/about">About</router-link>
-      <router-link to="/dashboard">Dashboard</router-link>
-    </header>
-    <main>
+  <v-app>
+    <v-app-bar app color="primary" dark>
+      <v-btn :ripple="false" plain class="theme--dark" to="/home">Home</v-btn>
+      <v-btn :ripple="false" plain class="theme--dark" to="/about">About</v-btn>
+      <v-btn :ripple="false" plain class="theme--dark" to="/dashboard"
+        >Dashboard</v-btn
+      >
+    </v-app-bar>
+
+    <v-main>
       <router-view />
-    </main>
-    <!-- <transition name="fade"><context-menu /> </transition> -->
-  </div>
+    </v-main>
+  </v-app>
 </template>
- 
+
 <script>
-// import ContextMenu from "./components/ContextMenu.vue";
 export default {
   name: "App",
-  // components: { ContextMenu },
-  data() {
-    return {
-      page: "dashboard",
-    };
-  },
 
-  methods: {},
+  data: () => ({
+    //
+  }),
 };
 </script>
- 
+
 <style lang="scss" scoped>
-#app {
-  width: 550px;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 a {
+  color: black;
   margin: 0 20px 0 0;
 }
+.theme--dark {
+  color: white;
+}
 </style>
-

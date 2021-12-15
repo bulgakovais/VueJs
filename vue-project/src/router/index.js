@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import PageHome from "../page/PageHome.vue";
 import PageAbout from "../page/PageAbout.vue";
 import PageDashboard from "../page/PageDashboard.vue";
-
+import contextMenu from "../plugins/contextMenu"
 Vue.use(VueRouter)
 
 const routes = [
@@ -36,6 +36,12 @@ const routes = [
     path: '/about',
     name: 'About',
     component: PageAbout
+    //  () => import('../views/About.vue')
+  },
+  {
+    path: '/dashboard',
+    name: 'contextMenu',
+    component: contextMenu
     //  () => import('../views/About.vue')
   },
 ]

@@ -1,38 +1,98 @@
 <template>
-  <div>
-    <div>
-      <p @click="routerLinkOnClick">
-        <!-- Первая ссылка визуализирует поведение при отсутствии вводного параметра value -->
+  <v-container>
+    <v-row
+      ><p @click="routerLinkOnClick">
+        <!-- Первая ссылка визуализирует поведение при отсутствии вводного параметра
+        value -->
         <router-link class="link" to="/dashboard/add/payment/Food"
           >Добавить платеж в категорию Food стоимостью 200</router-link
         >
-      </p>
-      <p @click="routerLinkOnClick">
+      </p></v-row
+    >
+    <v-row
+      ><p @click="routerLinkOnClick">
         <router-link class="link" to="/dashboard/add/payment/Transport?value=50"
           >Добавить платеж в категорию Transport стоимостью 50</router-link
         >
-      </p>
-      <p @click="routerLinkOnClick">
+      </p></v-row
+    >
+    <v-row
+      ><p @click="routerLinkOnClick">
         <router-link
           class="link"
           to="/dashboard/add/payment/Entertainment?value=2000"
           >Добавить платеж в категорию Entertainment стоимостью
           2000</router-link
         >
-      </p>
-    </div>
-    <button @click="showAddForm">ADD NEW COST +</button>
-    <div v-show="showForm">
-      <input type="text" placeholder="Date" v-model="date" />
-      <select v-model="selected">
-        <option v-for="option in getCategoryList" :value="option" :key="option">
-          {{ option }}
-        </option>
-      </select>
-      <input type="number" placeholder="Price" v-model.number="value" />
-      <button @click="onClick">Save</button>
-    </div>
-  </div>
+      </p></v-row
+    >
+    <v-row
+      ><v-btn :ripple="false" @click="showForm = !showForm" color="teal" dark>
+        ADD NEW COST <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-row>
+
+    <v-form v-show="showForm">
+      <v-container>
+        <v-row>
+          <!-- Date -->
+          <v-col cols="12" md="4">
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="date"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="date"
+                  label="Date"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker v-model="date" no-title scrollable>
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="menu = false">
+                  Cancel
+                </v-btn>
+                <v-btn text color="primary" @click="$refs.menu.save(date)">
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
+          </v-col>
+
+          <!-- Category -->
+          <v-col class="d-flex" cols="12" md="4">
+            <v-select
+              v-model="selected"
+              :items="items"
+              label="Category"
+            ></v-select>
+          </v-col>
+
+          <!-- Value -->
+          <v-col cols="12" md="4">
+            <v-text-field
+              v-model.number="value"
+              label="Price"
+              required
+            ></v-text-field>
+          </v-col>
+
+          <!-- Button SAVE -->
+          <v-col cols="12" md="4">
+            <v-btn :ripple="false" @click="onClick">Save</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+  </v-container>
 </template>
 
 <script>
@@ -46,6 +106,9 @@ export default {
       selected: "",
       id: 0,
       showForm: false,
+      items: [],
+      menu: false,
+      menu2: false,
     };
   },
 
@@ -72,6 +135,9 @@ export default {
       this.showForm = !this.showForm;
     },
 
+    addItemsInCategoryList() {
+      this.items = this.getCategoryList;
+    },
     routerLinkOnClick() {
       // при отсутствии value в пути router-link
       if (!this.$route.query.value) {
@@ -120,6 +186,7 @@ export default {
       this.loadCategories();
     }
     this.$context.EventBus.$on("showFormOnClickEdit", this.showFormOnClickEdit);
+    this.items = this.getCategoryList;
   },
 };
 </script>

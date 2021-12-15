@@ -44,7 +44,7 @@ export default {
   computed: {
     stylesMenu() {
       return {
-        top: `${this.yPos - 10}px`,
+        top: `${this.yPos - 58}px`,
         left: `${this.xPos + 40}px`,
       };
     },

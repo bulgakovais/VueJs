@@ -1,9 +1,17 @@
 <template>
   <div>
-    <PaymentsForm />
-    <PaymentsList />
-    <Pagination @paginate="onChangePage" :cur="page" :length="12" />
-    <transition name="fade"><context-menu /></transition>
+    <v-container>
+      <v-row>
+        <v-col>
+          <header>My personal costs</header>
+          <PaymentsForm />
+          <PaymentsList />
+          <Pagination @paginate="onChangePage" :cur="page" :length="12" />
+          <transition name="fade"><context-menu /></transition>
+        </v-col>
+        <v-col>Диаграмма </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 

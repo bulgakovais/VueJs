@@ -1,5 +1,27 @@
 <template>
-  <div>
+  <v-container>
+    <v-row>
+      <v-col :cols="1">#</v-col>
+      <v-col :cols="3">Date</v-col>
+      <v-col :cols="4">Category</v-col>
+      <v-col :cols="2">Value</v-col>
+      <!-- <v-col :cols="2">Menu</v-col> -->
+    </v-row>
+    <v-row v-for="(item, index) in getPaymentsList" :key="index">
+      <v-col :cols="1">{{ index + 1 }}</v-col>
+      <v-col :cols="3">{{ item.date }}</v-col>
+      <v-col :cols="4">{{ item.category }}</v-col>
+      <v-col :cols="2">{{ item.value }}</v-col>
+      <v-col
+        :cols="1"
+        class="contextLink"
+        @click="onClickContextMenu($event, item)"
+        >...</v-col
+      >
+    </v-row>
+  </v-container>
+
+  <!-- <div>
     <div class="heading_table column">
       <p class="widthCol">#</p>
       <p class="widthCol">Date</p>
@@ -13,7 +35,7 @@
       <p class="widthCol">{{ item.value }}</p>
       <p class="contextLink" @click="onClickContextMenu($event, item)">...</p>
     </div>
-  </div>
+  </div> -->
 </template>
  
 <script>
